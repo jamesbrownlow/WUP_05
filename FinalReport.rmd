@@ -21,6 +21,9 @@ A new  preventative aides drug (triUmpsal) is under test in clinical trials. Con
 
 <!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method. Discuss what data manipulations may be needed for example subsetting or other binning procedures and what sort of graphical displays and inferential tools will be used!-->
 
+$H_0$: getting aids is independent of getting the vaccine or placebo  
+$H_A$: getting aides is related to getting the vaccine or placebo
+
 # Results
 
 <!--Divide this section into two sub-sections:  One for your descriptive  results and one for your inferential results.!-->
@@ -31,9 +34,32 @@ A new  preventative aides drug (triUmpsal) is under test in clinical trials. Con
 
 <!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question. Bottom line is to explain the features of the graph that are relevant to conforming or departing to what is expected by your null hypothesis !-->
 
+```{r}
+dataF=filter(triUmp, gender == 'F')
+barchartGC(~infected + treatment,data=dataF)
+barchartGC(~treatment+infected ,data=dataF, type="percent")
+
+```
+
+from the barchart it appears that there is no perceptible diffence between those who got the placebo or vaccind
+
 ### Numerical Descriptive Results
 
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+
+```{r}
+table1 <- xtabs(~treatment + infected , data=dataF)
+rowPerc(table1)
+colPerc(table1)
+```
+##Inferential  
+
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+```
+
 
 ## Inferential Results
 
